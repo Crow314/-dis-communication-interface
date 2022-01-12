@@ -11,4 +11,10 @@ html lang="ja"
     = stylesheet_pack_tag 'application'
     = yield(:html_head) if content_for?(:html_head)
   body
+    header.pb-3
+      nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+        .container-fluid
+          = link_to "災害用情報通信システム", root_path, class: "navbar-brand ml-2 d-inline-block"
+          button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="ナビゲーションの切替"
+            span.navbar-toggler-icon
     = yield
