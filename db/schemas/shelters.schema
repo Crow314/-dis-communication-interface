@@ -1,0 +1,10 @@
+create_table :shelters,  force: :cascade, id: :uuid, default: -> { 'gen_random_uuid()' } do |t|
+  t.integer :index,   null: false
+  t.string  :name,    null: false
+  t.string  :address, null: false
+  t.string  :phone,   null: false
+
+  t.timestamps null: false
+
+  t.index :index, unique: true
+end

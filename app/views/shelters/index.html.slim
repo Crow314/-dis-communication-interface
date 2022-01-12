@@ -1,0 +1,39 @@
+- content_for(:html_title) {"避難所一覧"}
+
+.container
+  h1
+    = "避難所一覧"
+  hr.border.border-dark
+
+  .container-fluid
+    == pagy_bootstrap_nav(@pagy)
+    table.table.table-striped.table-sm.table-hover
+      thead
+        tr
+          th scope='col'
+            | ID
+          th scope='col'
+            | 施設名
+          th scope='col'
+            | 住所
+          th scope='col'
+            | 電話番号
+      tbody
+        - @shelters.each do |shelter|
+            tr.table-row
+              td
+                = shelter.index
+              td
+                = link_to shelter.name, shelter
+              td
+                = shelter.address
+              td
+                = shelter.phone
+        - for idx in @shelters.length..15
+          tr.table-row
+            td
+              | ​
+            td
+            td
+            td
+    == pagy_bootstrap_nav(@pagy)
