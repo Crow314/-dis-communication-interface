@@ -1,0 +1,14 @@
+doctype html
+html lang="ja"
+  head
+    title
+      = content_for?(:html_title) ? yield(:html_title) : "Default"
+    meta name="viewport" content="width=device-width,initial-scale=1.0"
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = javascript_pack_tag 'application'
+    = stylesheet_pack_tag 'application'
+    = yield(:html_head) if content_for?(:html_head)
+  body
+    = yield
