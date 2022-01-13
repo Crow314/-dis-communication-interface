@@ -8,5 +8,9 @@ class SheltersController < ApplicationController
   end
 
   def show
+    @shelter = Shelter.find(params[:id])
+    @pagy, @evacuees = pagy(@shelter.evacuees.order(birth_date: 'ASC'), items: 16)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to shelters_path
   end
 end

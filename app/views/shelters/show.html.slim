@@ -1,2 +1,39 @@
-h1 Shelters#show
-p Find me in app/views/shelters/show.html.slim
+- content_for(:html_title) {"避難者一覧 | " + @shelter.name}
+
+.container
+  h1
+    = "避難者一覧 | " + @shelter.name
+  hr.border.border-dark
+
+  .container-fluid
+    == pagy_bootstrap_nav(@pagy)
+    table.table.table-striped.table-sm.table-hover
+      thead
+        tr
+          th scope='col'
+            | 生年月日
+          th scope='col'
+            | 姓
+          th scope='col'
+            | 名
+          th scope='col'
+            | 登録日時
+      tbody
+        - @evacuees.each do |evacuee|
+          tr.table-row
+            td
+              = evacuee.birth_date
+            td
+              = evacuee.family_name
+            td
+              = evacuee.first_name
+            td
+              = evacuee.updated_at
+        - for idx in @evacuees.length..15
+          tr.table-row
+            td
+              | ​
+            td
+            td
+            td
+    == pagy_bootstrap_nav(@pagy)
