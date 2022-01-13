@@ -1,0 +1,2 @@
+module EvacueesHelper
+end
