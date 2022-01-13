@@ -1,0 +1,2 @@
+require 'schemas/shelters.schema'
+require 'schemas/evacuees.schema'
