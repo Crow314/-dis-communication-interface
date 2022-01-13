@@ -1,0 +1,11 @@
+create_table :evacuees,  force: :cascade, id: :uuid, default: -> { 'gen_random_uuid()' } do |t|
+  t.references :shelter, type: :uuid, null: false
+
+  t.string :first_name,  null: false
+  t.string :family_name, null: false
+  t.date   :birth_date,  null: false
+
+  t.timestamps null: false
+end
+
+add_foreign_key :evacuees, :shelters
