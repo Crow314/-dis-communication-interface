@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'shelters#index'
+  resources :shelters, only: [:index, :show]
+  resources :evacuees, only: [:new, :create]
+  post 'evacuees/register', to: 'evacuees#register', as: :evacuees_register
 end
