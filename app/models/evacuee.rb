@@ -29,7 +29,7 @@ class Evacuee < ApplicationRecord
   end
 
   def packet
-    ([self.shelter.index, encoded_birth_date % 256, encoded_birth_date / 256] + encoded_first_name.ljust(6, "\0").bytes[0..5] + encoded_family_name.ljust(6, "\0").bytes[0..5] + [0]).pack("C*")
+    [self.shelter.index, encoded_birth_date / 256, encoded_birth_date % 256] + encoded_first_name.ljust(6, "\0").bytes[0..5] + encoded_family_name.ljust(6, "\0").bytes[0..5] + [0]
   end
 
   private
@@ -54,13 +54,11 @@ class Evacuee < ApplicationRecord
 
   class << self
     def new_from_packet(packet)
-      binary = packet.unpack("C*")
-
       Evacuee.new(
-        shelter: Shelter.find_by(index: binary[0]),
-        birth_date: MIN_BIRTH_DATE.days_since(binary[1]*256 + binary[2]),
-        first_name: NKF.nkf('-w -S --fb-subchar=0x3013', binary[3..8].collect {|c| c != 0 ? c.chr : '' }.join),
-        family_name: NKF.nkf('-w -S --fb-subchar=0x3013', binary[9..14].collect {|c| c != 0 ? c.chr : '' }.join)
+        shelter: Shelter.find_by(index: packet[0]),
+        birth_date: MIN_BIRTH_DATE.days_since(packet[1]*256 + packet[2]),
+        first_name: NKF.nkf('-w -S --fb-subchar=0x3013', packet[3..8].collect {|c| c != 0 ? c.chr : '' }.join),
+        family_name: NKF.nkf('-w -S --fb-subchar=0x3013', packet[9..14].collect {|c| c != 0 ? c.chr : '' }.join)
       )
     end
   end
